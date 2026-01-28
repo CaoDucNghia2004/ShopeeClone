@@ -20,7 +20,6 @@ export default function NavHeader() {
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
     onSuccess: () => {
-      console.log(111)
       setIsAuthenticated(false)
       setProfile(null)
       queryClient.removeQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })

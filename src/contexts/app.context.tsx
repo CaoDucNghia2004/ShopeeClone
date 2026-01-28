@@ -23,6 +23,7 @@ const initialAppContext: AppContextInterface = {
   reset: () => null
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AppContext = createContext<AppContextInterface>(initialAppContext)
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {

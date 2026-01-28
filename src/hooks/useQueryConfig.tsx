@@ -26,3 +26,5 @@ export default function useQueryConfig() {
   )
   return queryConfig
 }
+
+//omitBy(obj, isUndefined) là cách nhanh gọn để loại bỏ tất cả các field có giá trị undefined khỏi object

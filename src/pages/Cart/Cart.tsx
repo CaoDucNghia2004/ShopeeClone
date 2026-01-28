@@ -26,6 +26,7 @@ export default function Cart() {
     queryFn: () => purchaseApi.getPurchases({ status: purchasesStatus.inCart })
   })
 
+  // console.log(purchasesInCartData)
   const updatePurchaseMutation = useMutation({
     mutationFn: purchaseApi.updatePurchase,
     onSuccess: () => {
@@ -50,12 +51,15 @@ export default function Cart() {
       refetch()
     }
   })
+
   const location = useLocation()
   const choosenPurchaseIdFromLocation = (location.state as { purchaseId: string } | null)?.purchaseId
   const purchasesInCart = purchasesInCartData?.data.data
+
   const isAllChecked = useMemo(() => extendedPurchases.every((purchase) => purchase.checked), [extendedPurchases])
   const checkedPurchases = useMemo(() => extendedPurchases.filter((purchase) => purchase.checked), [extendedPurchases])
   const checkedPurchasesCount = checkedPurchases.length
+
   const totalCheckedPurchasePrice = useMemo(
     () =>
       checkedPurchases.reduce((result, current) => {
@@ -63,6 +67,7 @@ export default function Cart() {
       }, 0),
     [checkedPurchases]
   )
+
   const totalCheckedPurchaseSavingPrice = useMemo(
     () =>
       checkedPurchases.reduce((result, current) => {
@@ -85,7 +90,7 @@ export default function Cart() {
         }) || []
       )
     })
-  }, [purchasesInCart, choosenPurchaseIdFromLocation])
+  }, [purchasesInCart, choosenPurchaseIdFromLocation, setExtendedPurchases])
 
   useEffect(() => {
     return () => {

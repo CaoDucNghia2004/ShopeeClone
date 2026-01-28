@@ -13,12 +13,12 @@ export default function ProductList() {
   const queryConfig = useQueryConfig()
 
   const { data: productsData } = useQuery({
-    queryKey: ['products', queryConfig],
+    queryKey: ['products', queryConfig], //Thêm queryConfig vào queryKey để đảm bảo React Query cache chính xác từng bộ lọc sản phẩm, và biết khi nào phải fetch lại dữ liệu từ server.
     queryFn: () => {
       return productApi.getProducts(queryConfig as ProductListConfig)
     },
-    placeholderData: keepPreviousData,
-    staleTime: 3 * 60 * 1000
+    placeholderData: keepPreviousData, //Dữ liệu cũ được “giữ lại” cho đến khi dữ liệu mới được fetch xong.
+    staleTime: 3 * 60 * 1000 // nghĩa là "trong vòng 3 phút sau khi fetch, coi dữ liệu là còn mới, không cần gọi lại API." Giúp tăng hiệu suất và trải nghiệm mượt mà hơn.
   })
 
   const { data: categoriesData } = useQuery({

@@ -29,6 +29,9 @@ interface Props {
   pageSize: number
 }
 
+// page là cái hiện tại, pageSize là tổng số trang
+// Ví dụ: page = 1, pageSize = 20 thì sẽ có 20
+
 const RANGE = 2
 export default function Pagination({ queryConfig, pageSize }: Props) {
   const page = Number(queryConfig.page)
@@ -66,6 +69,8 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
         if (page <= RANGE * 2 + 1 && pageNumber > page + RANGE && pageNumber < pageSize - RANGE + 1) {
           return renderDotAfter(index)
         } else if (page > RANGE * 2 + 1 && page < pageSize - RANGE * 2) {
+          //1 2 ... 4 5 [6] 8 9 ... 19 20
+          //1 2 ...13 14 [15] 16 17 ... 19 20
           if (pageNumber < page - RANGE && pageNumber > RANGE) {
             return renderDotBefore(index)
           } else if (pageNumber > page + RANGE && pageNumber < pageSize - RANGE + 1) {
@@ -75,12 +80,14 @@ export default function Pagination({ queryConfig, pageSize }: Props) {
           return renderDotBefore(index)
         }
         return (
+          //createSearchParams({ page: '5', sort: 'price' }).toString()
+          // 👉 'page=5&sort=price'
           <Link
             to={{
               pathname: path.home,
               search: createSearchParams({
-                ...queryConfig,
-                page: pageNumber.toString()
+                ...queryConfig, //Giữ lại toàn bộ query hiện có
+                page: pageNumber.toString() //Ghi đè page bằng số mới
               }).toString()
             }}
             className={classNames('mx-2 cursor-pointer rounded border bg-white px-3 py-2 shadow-sm', {

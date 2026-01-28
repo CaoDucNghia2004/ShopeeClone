@@ -24,7 +24,6 @@ export default function ProductDetail() {
   const [buyCount, setByCount] = useState(1)
   const { nameId } = useParams()
   const id = getIdFromNameId(nameId as string)
-  console.log(id)
 
   const { data: productDetailData } = useQuery({
     queryKey: ['product', id],
@@ -48,7 +47,7 @@ export default function ProductDetail() {
       return productApi.getProducts(queryConfig)
     },
     staleTime: 3 * 60 * 1000,
-    enabled: Boolean(product)
+    enabled: Boolean(product) //Chỉ gọi API khi đã có product (tức là đã fetch chi tiết sản phẩm thành công)
   })
 
   const addToCartMutation = useMutation({
@@ -80,9 +79,9 @@ export default function ProductDetail() {
   }
 
   const handleZoom = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const rect = event.currentTarget.getBoundingClientRect()
-    const image = imageRef.current as HTMLImageElement
-    const { naturalHeight, naturalWidth } = image
+    const rect = event.currentTarget.getBoundingClientRect() // Lấy vị trí và kích thước của khung ảnh hiện tại (thẻ div chứa ảnh).
+    const image = imageRef.current as HTMLImageElement //Lấy ảnh DOM element để thao tác thay đổi kích thước và vị trí.
+    const { naturalHeight, naturalWidth } = image //Lấy kích thước gốc (gốc thật của ảnh, không bị scale).
     // Cách 1: Lấy offsetX, offsetY đơn giản khi chúng ta đã xử lý được bubble event
     // const { offsetX, offsetY } = event.nativeEvent
 

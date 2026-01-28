@@ -23,7 +23,7 @@ export default function Input({
   ...rest
 }: Props) {
   const [openEye, setOpenEye] = useState(false)
-  const registerResult = register && name ? register(name, rules) : {}
+  const registerResult = register && name ? register(name, rules) : null
 
   const toggleEye = () => {
     setOpenEye((prev) => !prev)

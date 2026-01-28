@@ -93,7 +93,7 @@ export default function Profile() {
     setError
   } = methods
 
-  const { data: profileData } = useQuery({
+  const { data: profileData, refetch } = useQuery({
     queryKey: ['profile'],
     queryFn: () => userApi.getProfile()
   })
@@ -102,6 +102,7 @@ export default function Profile() {
   const updateProfileMutation = useMutation({
     mutationFn: userApi.updateProfile
   })
+
   const uploadAvatarMutaion = useMutation({
     mutationFn: userApi.uploadAvatar
   })
@@ -114,7 +115,6 @@ export default function Profile() {
       setValue('date_of_birth', profile.date_of_birth ? new Date(profile.date_of_birth) : new Date(1990, 0, 1))
     }
   }, [profile, setValue])
-  // console.log(profile)
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -133,7 +133,7 @@ export default function Profile() {
       })
       setProfile(res.data.data)
       setProfileToLS(res.data.data)
-      // refetch()
+      refetch()
       toast.success(res.data.message)
     } catch (error) {
       if (isAxiosUnprocessableEntityError<ErrorResponse<FormDataError>>(error)) {

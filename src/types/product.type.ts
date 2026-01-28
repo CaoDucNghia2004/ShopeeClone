@@ -18,6 +18,7 @@ export interface Product {
   updatedAt: string
 }
 
+//Kết quả API khi gọi danh sách sản phẩm
 export interface ProductList {
   products: Product[]
   pagination: {
@@ -27,6 +28,7 @@ export interface ProductList {
   }
 }
 
+//Tham số dùng để gọi API danh sách sản phẩm
 export interface ProductListConfig {
   page?: number | string
   limit?: number | string

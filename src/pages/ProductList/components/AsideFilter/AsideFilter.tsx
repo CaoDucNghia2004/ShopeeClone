@@ -1,8 +1,6 @@
 import path from 'src/constants/path'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
-
 import Button from 'src/components/Button'
-
 import { Category } from 'src/types/category.type'
 import classNames from 'classnames'
 import InputNumber from 'src/components/InputNumber'
@@ -28,6 +26,8 @@ interface Props {
 
 type FormData = NoUndefinedField<Pick<Schema, 'price_max' | 'price_min'>>
 
+// type FormData = Pick<Schema, 'price_max' | 'price_min'>
+
 /**
  * Rule validate
  * Nếu có price_min và price_max thì price_max >= price_min
@@ -51,7 +51,8 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
       price_min: '',
       price_max: ''
     },
-    resolver: yupResolver(priceSchema),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: yupResolver(priceSchema) as any,
     shouldFocusError: false
   })
 
